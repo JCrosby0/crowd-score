@@ -1,0 +1,16 @@
+[
+  {
+    "name": "score",
+    "path": "/score",
+    "component": "/home/jcrosby/projects/crowd-score/pages/score.vue",
+    "chunkName": "pages/score",
+    "_name": "_6750085f"
+  },
+  {
+    "name": "index",
+    "path": "/",
+    "component": "/home/jcrosby/projects/crowd-score/pages/index.vue",
+    "chunkName": "pages/index",
+    "_name": "_8f6e5ac2"
+  }
+]

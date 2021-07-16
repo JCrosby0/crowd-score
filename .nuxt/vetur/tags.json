@@ -1,0 +1,20 @@
+{
+  "GameInfo": {
+    "description": "Auto imported from components/GameInfo.vue"
+  },
+  "InningsDiamond": {
+    "description": "Auto imported from components/InningsDiamond.vue"
+  },
+  "NuxtLogo": {
+    "description": "Auto imported from components/NuxtLogo.vue"
+  },
+  "ScoreCard": {
+    "description": "Auto imported from components/ScoreCard.vue"
+  },
+  "Stats": {
+    "description": "Auto imported from components/Stats.vue"
+  },
+  "Tutorial": {
+    "description": "Auto imported from components/Tutorial.vue"
+  }
+}
