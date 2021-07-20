@@ -1,9 +1,17 @@
 <template>
   <div class="score-card-table">
+    <div class="w-full px-4 text-xl">
+      <h1>{{ team.name }} - {{ score }}</h1>
+    </div>
     <table class="w-full m-auto">
+      <!-- Heading row -->
       <thead>
-        <!-- Player Info -->
-        <th v-for="(col, c) in cols" :key="'player-col-head-'+c" :class="col" :width="colWidth[c]">
+        <th
+          v-for="(col, c) in cols"
+          :key="'player-col-head-'+c"
+          :class="col"
+        >
+          <!-- :width="colWidth[c]" -->
           {{ col }}
         </th>
         <th v-for="(inning, i) in innings" :key="'innings-head-'+i">
@@ -28,10 +36,16 @@
           </td>
           <!-- Innings -->
           <td v-for="(inning, i) in innings" :key="'innings-'+i" class="td-diamond" @click.prevent="handleDiamondClick(i, p)">
-            <InningsDiamond :key="'diamond'+i+p" :size="diamondSize" class="diamond-pointer" :diamond-score="scoreObj[i][p].diamondObj" />
+            <InningsDiamond
+              :key="'diamond'+i+p"
+              :size="diamondSize"
+              :class="diamondClasses(scoreObj[i][p].diamondObj)"
+              :diamond-score="scoreObj[i][p].diamondObj"
+              :index="{team: ind, inning: i, player:p, }"
+            />
           </td>
           <!-- Stats -->
-          <td v-for="(stat, s) in statsCategories" :key="'stats-'+s" class="td-stats" width="2rem">
+          <td v-for="(stat, s) in statsCategories" :key="'stats-'+s" class="td-stats" width="1.5rem">
             {{ stats[p][stat] }}
           </td>
         </tr>
@@ -47,13 +61,13 @@ export default {
     InningsDiamond
   },
   props: {
-    lineup: {
+    team: {
       required: true,
-      type: Array
+      type: Object
     },
-    scoreObj: {
+    ind: {
       required: true,
-      type: Array
+      type: Number
     }
   },
   data () {
@@ -67,8 +81,15 @@ export default {
     }
   },
   computed: {
+    lineup () { return this.team.lineup },
+    scoreObj () { return this.team.scoreObj },
     innings () {
       return Array(this.numberInnings).fill([])
+    },
+    score () {
+      return this.stats.reduce((acc, cur) => {
+        return acc + cur.R
+      }, 0)
     },
     stats () {
       const stats = []
@@ -81,16 +102,16 @@ export default {
             return cur[p].diamondObj.base === 4 ? acc + 1 : acc
           }, 0),
           H: this.scoreObj.reduce((acc, cur) => {
-            return ['1B', '2B', '3B', 'HR'].includes(cur[p].diamondObj.howBase) ? acc + 1 : acc
+            return ['1B', '2B', '3B', 'HR', 'GRD'].includes(cur[p].diamondObj.howBase) ? acc + 1 : acc
           }, 0),
           RBI: this.scoreObj.reduce((acc, cur) => {
             return cur[p].diamondObj.rbi ? acc + cur[p].diamondObj.rbi : acc
           }, 0),
           BB: this.scoreObj.reduce((acc, cur) => {
-            return cur[p].diamondObj.howBase === 'BB' ? acc + 1 : acc
+            return ['BB', 'HBP'].includes(cur[p].diamondObj.howBase) ? acc + 1 : acc
           }, 0),
           SO: this.scoreObj.reduce((acc, cur) => {
-            return ['K', 'ꓘ'].includes(cur[p].diamondObj.howOut) ? acc + 1 : 0
+            return ['K', 'ꓘ'].includes(cur[p].diamondObj.howOut) ? acc + 1 : acc
           }, 0)
         }
       })
@@ -98,8 +119,14 @@ export default {
     }
   },
   methods: {
+    diamondClasses (obj) {
+      return {
+        inactive: !obj.AB,
+        diamondPointer: true
+      }
+    },
     handleDiamondClick (inning, player) {
-      console.log('clicked on inning: ', inning, 'player: ', player)
+      this.$emit('showDiamond', { inning, player })
     }
   }
 
@@ -137,6 +164,7 @@ th {
   border: 2px black solid;
   background: grey;
   z-index: 1;
+  /* padding: 0 0.5rem; */
 }
 table thead th:nth-child(2),
 table tbody td:nth-child(2) {
@@ -154,8 +182,9 @@ table thead th:nth-child(2) {
 .table-names td,
 .td-diamond,
 .td-stats {
-  padding: 0.25rem 1rem;
+  padding: 0.25rem 0.5rem;
   border: 1px grey solid;
+  text-align: center;
 }
 .td-diamond {
   padding: 0;
@@ -171,5 +200,8 @@ tr:first-of-type td.Batter span {
 }
 .diamond-pointer {
   pointer-events: none;
+}
+.inactive {
+  background: #cccccc;
 }
 </style>

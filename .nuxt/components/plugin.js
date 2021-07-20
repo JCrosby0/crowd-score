@@ -4,6 +4,7 @@ import { wrapFunctional } from './utils'
 const components = {
   GameInfo: () => import('../../components/GameInfo.vue' /* webpackChunkName: "components/game-info" */).then(c => wrapFunctional(c.default || c)),
   InningsDiamond: () => import('../../components/InningsDiamond.vue' /* webpackChunkName: "components/innings-diamond" */).then(c => wrapFunctional(c.default || c)),
+  InputDiamond: () => import('../../components/InputDiamond.vue' /* webpackChunkName: "components/input-diamond" */).then(c => wrapFunctional(c.default || c)),
   NuxtLogo: () => import('../../components/NuxtLogo.vue' /* webpackChunkName: "components/nuxt-logo" */).then(c => wrapFunctional(c.default || c)),
   ScoreCard: () => import('../../components/ScoreCard.vue' /* webpackChunkName: "components/score-card" */).then(c => wrapFunctional(c.default || c)),
   Stats: () => import('../../components/Stats.vue' /* webpackChunkName: "components/stats" */).then(c => wrapFunctional(c.default || c)),

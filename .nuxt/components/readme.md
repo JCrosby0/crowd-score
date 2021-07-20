@@ -8,6 +8,7 @@ You can directly use them in pages and other components without the need to impo
 
 - `<GameInfo>` | `<game-info>` (components/GameInfo.vue)
 - `<InningsDiamond>` | `<innings-diamond>` (components/InningsDiamond.vue)
+- `<InputDiamond>` | `<input-diamond>` (components/InputDiamond.vue)
 - `<NuxtLogo>` | `<nuxt-logo>` (components/NuxtLogo.vue)
 - `<ScoreCard>` | `<score-card>` (components/ScoreCard.vue)
 - `<Stats>` | `<stats>` (components/Stats.vue)

@@ -1,9 +1,20 @@
 <template>
-  <div class="main flex flex-col">
+  <div class="main relative flex flex-col">
     <GameInfo />
     <ScoreCard
-      :lineup="teams[0].lineup"
-      :score-obj="teams[0].scoreObj"
+      v-for="(team, t) in teams"
+      :key="'team-score-card-'+t"
+      :team="team"
+      :ind="t"
+      @showDiamond="obj => handleShowDiamond(obj, t)"
+    />
+    <InputDiamond
+      v-if="showInput"
+      class="absolute top-0 left-0"
+      :indices="diamondInput"
+      :game-data="teams"
+      @closeWindow="toggleShowInputDiamond"
+      @updateData="payload => handleUpdateData(payload)"
     />
   </div>
 </template>
@@ -11,6 +22,12 @@
 <script>
 import GameInfo from '@/components/GameInfo'
 import ScoreCard from '@/components/ScoreCard'
+import InputDiamond from '@/components/InputDiamond'
+
+/**
+  * Routine to generate dummy score card
+  * TODO: modify existing runners on base during at-bat
+ */
 function createScoreObj (outs) {
   const baseObj = {
     diamondObj: {
@@ -28,11 +45,13 @@ function createScoreObj (outs) {
   if (outs >= 3) {
     return baseObj
   }
-  // if at bat, ther ecan be balls and strikes
+
+  // if at bat, there can be balls and strikes
+  baseObj.diamondObj.AB = 1
   baseObj.diamondObj.balls = Math.floor(Math.random() * 4)
   baseObj.diamondObj.strikes = Math.floor(Math.random() * 3)
 
-  // if an out, no on base
+  // handle out logic
   const out = Math.random() < 0.7
   if (out) {
     const howOut = ['F8', '6-3', 'K', 'ꓘ', '1-3FC'][Math.floor(Math.random() * 5)]
@@ -64,30 +83,28 @@ function createScoreObj (outs) {
         : 1
   baseObj.diamondObj.howBase = howBase
   baseObj.diamondObj.base = base
-  console.log('baseObj.diamondObj.base: ', baseObj.diamondObj.base)
   return baseObj
-//   return {
-//     diamondObj: {
-//       strikes: Math.floor(Math.random() * 3),
-//       balls: Math.floor(Math.random() * 4),
-//       base: Math.floor(Math.random() * 5),
-//       rbi: Math.floor(Math.random() * 5),
-//       howOut: ['F8', '6-3', 'K', 'ꓘ', '1-3FC'][Math.floor(Math.random() * 5)],
-//       howBase: ['1B', '2B', '3B', 'HR', 'BB', 'HP', 'FC', 'E', 'WP', 'PB', 'CI', 'GRD'][Math.floor(Math.random() * 12)],
-//       AB: Math.random() > 0.5,
-//       outNo: Math.floor(Math.random() * 4)
-//     }
-//   }
 }
 export default {
   components: {
     GameInfo,
-    ScoreCard
+    ScoreCard,
+    InputDiamond
+  },
+  provide () {
+    return {
+      teams: this.teams,
+      indices: this.diamondInput
+    }
   },
   data () {
     return {
+      demo: true,
+      showInput: false,
+      diamondInput: { team: 0, inning: 0, player: 0 },
       teams: [
         {
+          name: 'Hometown Homers',
           lineup: [
             'Alpha',
             'Bravo',
@@ -99,9 +116,10 @@ export default {
             'Hotel',
             'India'
           ],
-          scoreObj: null
+          scoreObj: [[{ diamondObj: {} }]]
         },
         {
+          name: 'Awayville Wayfinders',
           lineup: [
             'Romeo',
             'Sierra',
@@ -118,48 +136,63 @@ export default {
     }
   },
   created () {
-    const innings = new Array(11).fill(null)
-    this.teams[0].scoreObj = innings
-    // get the batter when third out occurs
-    let lastAtBat = 0
-    // starting batter for the innings
-    let firstBatter = 0
-    innings.forEach((inn, i) => {
-      console.log('new innings: ', i)
+    // for the purposes of the demo, create dummy scorecards
+    if (this.demo) {
+      this.prepareScoreObj(0)
+      this.prepareScoreObj(1)
+    }
+  },
+  methods: {
+    handleUpdateData (payload) {
+      console.log('handleUpdateData (payload): ', payload)
+      this.$set(this.teams[payload.team].scoreObj[payload.inning][payload.player].diamondObj, payload.key, payload.value)
+      console.log(this.teams[payload.team].scoreObj[payload.inning][payload.player].diamondObj)
+    },
+    toggleShowInputDiamond () {
+      this.showInput = !this.showInput
+    },
+    handleShowDiamond (obj, teamNo) {
+      obj.team = teamNo
+      this.diamondInput = obj
+      this.toggleShowInputDiamond()
+    },
+    prepareScoreObj (t = 0) {
+      const innings = new Array(11).fill(null)
+      this.teams[t].scoreObj = innings
+      // get the batter when third out occurs
+      let lastAtBat = 0
+      // starting batter for the innings
+      let firstBatter = 0
+      innings.forEach((inn, i) => {
       // start outs at 0 each innings
-      let outs = 0
-      // cycle 9 players each innings
-      // TODO: update this to go until 3 outs,
-      // TODO: moving to next innings when needed
-      const players = new Array(9).fill(null)
-      // add array of 9 players to the current innings
-      this.teams[0].scoreObj[i] = players
-      // iterate 9 players
-      console.log('firstBatter: ', firstBatter)
-      players.forEach((player, p) => {
+        let outs = 0
+        // cycle 9 players each innings
+        // TODO: update this to go until 3 outs,
+        // TODO: moving to next innings when needed
+        const players = new Array(9).fill(null)
+        // add array of 9 players to the current innings
+        this.teams[t].scoreObj[i] = players
+        // iterate 9 players
+        players.forEach((player, p) => {
         // generate score Obj
-        const scoreObj = createScoreObj(outs)
-        // if there was an out on that at bat, increment outs
-        // TODO: double-play? triple play?
-        if (scoreObj.diamondObj.howOut || scoreObj.diamondObj.howBase === 'FC') {
-          outs = outs + 1
-          // if we finish the innings, record the last at bat for next innings
-          console.log('scoreObj.diamondObj.outNo: ', scoreObj.diamondObj.outNo)
-          if (scoreObj.diamondObj.outNo >= 3) {
+          const scoreObj = createScoreObj(outs)
+          // if there was an out on that at bat, increment outs
+          // TODO: double-play? triple play?
+          if (scoreObj.diamondObj.howOut || scoreObj.diamondObj.howBase === 'FC') {
+            outs = outs + 1
+            // if we finish the innings, record the last at bat for next innings
+            if (scoreObj.diamondObj.outNo >= 3) {
             // last at bat was first batter + how many indices we went through,
-            lastAtBat = (p + firstBatter) % 9
-            console.log('lastAtBat: ', lastAtBat)
-            console.log('lastAtBat: ', lastAtBat)
+              lastAtBat = (p + firstBatter) % 9
+            }
           }
-          console.log('outs: ', outs)
-        }
-        // set this scoreObj against the appropriate player in the lineup
-        this.teams[0].scoreObj[i][(p + firstBatter) % 9] = scoreObj
-        console.log('write to batter: ', (p + firstBatter) % 9)
+          // set this scoreObj against the appropriate player in the lineup
+          this.teams[t].scoreObj[i][(p + firstBatter) % 9] = scoreObj
+        })
+        //   set first batter for next innings
+        firstBatter = lastAtBat + 1
       })
-      //   set first batter for next innings
-      firstBatter = lastAtBat + 1
-    })
+    }
   }
 }
 </script>

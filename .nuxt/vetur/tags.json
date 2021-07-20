@@ -5,6 +5,9 @@
   "InningsDiamond": {
     "description": "Auto imported from components/InningsDiamond.vue"
   },
+  "InputDiamond": {
+    "description": "Auto imported from components/InputDiamond.vue"
+  },
   "NuxtLogo": {
     "description": "Auto imported from components/NuxtLogo.vue"
   },
