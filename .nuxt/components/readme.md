@@ -13,3 +13,8 @@ You can directly use them in pages and other components without the need to impo
 - `<ScoreCard>` | `<score-card>` (components/ScoreCard.vue)
 - `<Stats>` | `<stats>` (components/Stats.vue)
 - `<Tutorial>` | `<tutorial>` (components/Tutorial.vue)
+- `<ScoreBaseball>` | `<score-baseball>` (components/score-baseball.js)
+- `<Utility>` | `<utility>` (components/utility.js)
+- `<AuGameInfoAU>` | `<au-game-info-a-u>` (components/au/GameInfoAU.vue)
+- `<AuInningsCross>` | `<au-innings-cross>` (components/au/InningsCross.vue)
+- `<AuScoreTable>` | `<au-score-table>` (components/au/ScoreTable.vue)

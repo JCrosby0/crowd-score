@@ -5,6 +5,8 @@ import { interopDefault } from './utils'
 import scrollBehavior from './router.scrollBehavior.js'
 
 const _6750085f = () => interopDefault(import('../pages/score.vue' /* webpackChunkName: "pages/score" */))
+const _704527fe = () => interopDefault(import('../pages/score-baseball-test.vue' /* webpackChunkName: "pages/score-baseball-test" */))
+const _18a51e1a = () => interopDefault(import('../pages/scoreAu.vue' /* webpackChunkName: "pages/scoreAu" */))
 const _8f6e5ac2 = () => interopDefault(import('../pages/index.vue' /* webpackChunkName: "pages/index" */))
 
 const emptyFn = () => {}
@@ -22,6 +24,14 @@ export const routerOptions = {
     path: "/score",
     component: _6750085f,
     name: "score"
+  }, {
+    path: "/score-baseball-test",
+    component: _704527fe,
+    name: "score-baseball-test"
+  }, {
+    path: "/scoreAu",
+    component: _18a51e1a,
+    name: "scoreAu"
   }, {
     path: "/",
     component: _8f6e5ac2,

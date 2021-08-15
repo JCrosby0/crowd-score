@@ -7,6 +7,20 @@
     "_name": "_6750085f"
   },
   {
+    "name": "score-baseball-test",
+    "path": "/score-baseball-test",
+    "component": "/home/jcrosby/projects/crowd-score/pages/score-baseball-test.vue",
+    "chunkName": "pages/score-baseball-test",
+    "_name": "_704527fe"
+  },
+  {
+    "name": "scoreAu",
+    "path": "/scoreAu",
+    "component": "/home/jcrosby/projects/crowd-score/pages/scoreAu.vue",
+    "chunkName": "pages/scoreAu",
+    "_name": "_18a51e1a"
+  },
+  {
     "name": "index",
     "path": "/",
     "component": "/home/jcrosby/projects/crowd-score/pages/index.vue",

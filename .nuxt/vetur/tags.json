@@ -19,5 +19,20 @@
   },
   "Tutorial": {
     "description": "Auto imported from components/Tutorial.vue"
+  },
+  "ScoreBaseball": {
+    "description": "Auto imported from components/score-baseball.js"
+  },
+  "Utility": {
+    "description": "Auto imported from components/utility.js"
+  },
+  "AuGameInfoAU": {
+    "description": "Auto imported from components/au/GameInfoAU.vue"
+  },
+  "AuInningsCross": {
+    "description": "Auto imported from components/au/InningsCross.vue"
+  },
+  "AuScoreTable": {
+    "description": "Auto imported from components/au/ScoreTable.vue"
   }
 }

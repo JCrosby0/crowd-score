@@ -1,0 +1,65 @@
+{
+  "fielding": [
+    { "label": "DO", "description": "Defensive Outs" },
+    { "label": "PO", "description": "Put Outs" },
+    { "label": "A", "description": "Assists" },
+    { "label": "E", "description": "Errors" },
+    { "label": "Pos", "description": "Position" },
+    { "label": "Ch", "description": "?" }
+  ],
+  "batting": [
+    { "label": "PA", "description": "Plate Appearances" },
+    { "label": "AB", "description": "At Bats" },
+    { "label": "R", "description": "Runs" },
+    { "label": "H", "description": "Hits" },
+    { "label": "1", "description": "One Base Hits" },
+    { "label": "2", "description": "Two Base Hits" },
+    { "label": "3", "description": "Three Base Hits" },
+    { "label": "HR", "description": "Home Runs" },
+    { "label": "RBI", "description": "Runs Batted In" },
+    { "label": "SAB", "description": "Sacrifice Bunt" },
+    { "label": "SAF", "description": "Sacrifice Fly" },
+    { "label": "BB", "description": "Base on Balls" },
+    { "label": "HBP", "description": "Hit By Pitch" },
+    { "label": "CI", "description": "Catcher Interference" },
+    { "label": "K", "description": "Strike Outs" },
+    { "label": "GDP", "description": "Ground Double Play" },
+    { "label": "SB", "description": "Stolen Bases" },
+    { "label": "CS", "description": "Caught Stealing" },
+    { "label": "LOB", "description": "Left On Base" }
+  ],
+  "pitchCount": [
+    { "label": "Balls", "description": "Balls Thrown" },
+    { "label": "Stks", "description": "Strikes Thrown" },
+    { "label": "Pit", "description": "Pitch Count" },
+    { "label": "BFP", "description": "Batters Facing Pitches" },
+    { "label": "HITS", "description": "Hits" },
+    { "label": "LOB", "description": "Left on Base" }
+  ],
+  "runs": [{ "label": "Runs", "description": "Runs Scored" }],
+  "pitching": [
+    { "label": "PI", "description": "Participated Innings" },
+    { "label": "INN", "description": "Innings Pitched" },
+    { "label": "H", "description": "Safe hits" },
+    { "label": "K", "description": "Strike Outs" },
+    { "label": "BB", "description": "Base on Balls" },
+    { "label": "HPB", "description": "Hit by Pitched Ball" },
+    { "label": "RS", "description": "Runs Scored" },
+    { "label": "ER", "description": "Earned Runs" },
+    { "label": "WP", "description": "Wild Pitches" },
+    { "label": "BLK", "description": "Balks" },
+    { "label": "PO", "description": "Pick Offs" },
+    { "label": "PCS", "description": "Pitcher Catches Stealing" },
+    { "label": "BFP", "description": "Batters Facing Pitches" },
+    { "label": "B", "description": "Balls" },
+    { "label": "S", "description": "Strikes" },
+    { "label": "P", "description": "Total Pitches" },
+    { "label": "W/L/S", "description": "Winning/Losing/Saving Pitcher" }
+  ],
+  "catching": [
+    { "label": "INN", "description": "Innings caught" },
+    { "label": "PB", "description": "Passed Balls" },
+    { "label": "SB", "description": "Stolen Bases" },
+    { "label": "CCS", "description": "Catcher Catches Stealing" }
+  ]
+}
